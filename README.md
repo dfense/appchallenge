@@ -33,7 +33,7 @@ if one is to be working in the repository, or would like the do the following:
 * go vet
 * build a docker container
 * cross compile
-please follwing the clone and build instructions below
+please following the clone and build instructions below
 
 ```
 $ git clone https://github.com/dfense/appchallenge.git
@@ -43,11 +43,11 @@ $ go build -o ./bin/namejoked github.com/dfense/appchallenge/cmd/namejoked
 $ ./bin/namejoked --loglevel debug ## <- or any log level, or none will default to info
 ```
 
-## utils
-build a container and start it
-
+## more build options
+build exe for container, build a container and start it
 
 ```
+GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o ./bin/docker-namejoked github.com/dfense/appchallenge/cmd/namejoked
 $ docker build -t appchallenge .
 $ docker run -d --name namejoked -p 8080:8082 appchallenge
 $ docker stop namejoked
