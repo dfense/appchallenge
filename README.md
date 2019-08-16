@@ -40,15 +40,18 @@ $ ./bin/namejoked --loglevel debug ## <- or any log level, or none will default 
 
 ## utils
 build a container and start it
+
 `
 $ docker build -t appchallenge .
 $ docker run -d --name namejoked -p 8080:8082 appchallenge
 `
 
 open a browser or hit api with 
+
 `localhost:8080`
 
 to check code compliance with "go vet" or run "go test"
+
 `
 $ go test github.com/dfense/appchallenge/...
 $ go vet github.com/dfense/appchallenge/...
