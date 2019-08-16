@@ -16,10 +16,16 @@ There is only (1) endpoint of "/"
 
 ## go get
 to build and run the binary from command line, this is the minimal steps you need to do
-it utilizes the newer "go modules" for dependency transitivity
+it utilizes the newer _"go modules"_ for dependency transitivity
 
 ```
 go get github.com/dfense/appchallenge/cmd/namejoked
+```
+this should fetch all the code from github, place it in your default `$HOME/go/src directory`, and compile it into `$HOME/bin/namejoked`
+
+then just run it from there with following command (assuming osx or linux)
+```
+~/go/bin/namejoked
 ```
 
 ## clone and build
@@ -44,6 +50,8 @@ build a container and start it
 ```
 $ docker build -t appchallenge .
 $ docker run -d --name namejoked -p 8080:8082 appchallenge
+$ docker stop namejoked
+$ docker start namejoked
 ```
 
 open a browser or hit api with 
@@ -56,3 +64,6 @@ to check code compliance with "go vet" or run "go test"
 $ go test github.com/dfense/appchallenge/...
 $ go vet github.com/dfense/appchallenge/...
 `
+
+## cheat sheet
+a list of all these commands above and more are located in the build.txt file in root of project
