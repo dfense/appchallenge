@@ -27,6 +27,7 @@ then just run it from there with following command (assuming osx or linux)
 ```
 ~/go/bin/namejoked
 ```
+then can open any browser or api call here: http://localhost:8082
 
 ## clone and build
 if one is to be working in the repository, or would like the do the following:
@@ -54,9 +55,9 @@ $ docker stop namejoked
 $ docker start namejoked
 ```
 
-open a browser or hit api with 
+if started with container, open any browser or api call with 
 
-`localhost:8080`
+`localhost:8080 ## <- port is different for container`
 
 to check code compliance with "go vet" or run "go test"
 
