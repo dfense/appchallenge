@@ -1,0 +1,25 @@
+## build after git clone
+go build github.com/dfense/appchallenge/cmd/namejoked
+
+## compile for docker
+GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o ./bin/docker-namejoked github.com/dfense/appchallenge/cmd/namejoked
+
+## run unit tests
+go test github.com/dfense/appchallenge/...
+
+## build to just get an executable file
+go get github.com/dfense/appchallenge/cmd/namejoked
+
+## vet the source code
+go  vet github.com/dfense/appchallenge/...
+
+## build docker container
+docker build -t appchallenge .
+
+## run new docker image
+docker run -d --name namejoked -p 8080:8082 appchallenge
+## stop/start and remove after this
+
+## build with make. this is good for people working in the repo on codebase
+## TODO add make file
+make

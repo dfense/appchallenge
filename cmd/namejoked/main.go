@@ -8,6 +8,7 @@ import (
 	"os"
 	"os/signal"
 	"strings"
+	"syscall"
 	"time"
 
 	// <- golang module base
@@ -29,13 +30,14 @@ func main() {
 
 	// parse command line
 	logLevelString := flag.String("loglevel", "info", "loglevels")
+	logOutput := flag.String("logoutput", "stdout", `output destination for log info ["file" or "stdout"]`)
 	flag.Parse()
 
-	setupLoggerDefaults(*logLevelString)
+	setupLoggerDefaults(*logLevelString, *logOutput)
 
 	// create a stop channel, and setup a signal handler
-	stop := make(chan os.Signal, 1)   // <- simple channel to handle interrupt signal
-	signal.Notify(stop, os.Interrupt) // <- send stop channel a notify event
+	stop := make(chan os.Signal, 1)                                    // <- simple channel to handle interrupt signal
+	signal.Notify(stop, os.Interrupt, syscall.SIGTERM, syscall.SIGINT) // <- send stop channel a notify event
 
 	// see if environment variable for port was set. if not use default
 	addr := ":" + os.Getenv("PORT")
@@ -64,21 +66,18 @@ func main() {
 }
 
 func printHeader() {
-	fmt.Println("===============================================================")
+	fmt.Println("\n\n===============================================================")
 	fmt.Println("  http service to retrieve chuck norris jokes and replace names")
 	fmt.Println("  appchallenge test for John Frailey   ")
 	fmt.Println("===============================================================")
+	fmt.Println("")
 }
 
 // <--- everything here down is just setting up log preferences --->
 
 // setupLoggerDefaults - set preferred logrus defaults
-// TODO add file, network, rollover, etc
-func setupLoggerDefaults(logLevelString string) {
-
-	var filename string = "logfile.log"
-	// Create the log file if doesn't exist. And append to it if it already exists.
-	f, err := os.OpenFile(filename, os.O_WRONLY|os.O_APPEND|os.O_CREATE, 0644)
+// TODO add file, network, rollover, etc and isolate into log.go
+func setupLoggerDefaults(logLevelString, logoutput string) {
 
 	customFormatter := new(log.TextFormatter)
 	customFormatter.TimestampFormat = "2006-01-02 15:04:05"
@@ -91,8 +90,19 @@ func setupLoggerDefaults(logLevelString string) {
 		// TODO print all level options or refer to api doc
 		log.Error(err)
 	}
+
+	// only SetOutput if specified for file. else stdout default
+	if logoutput == "file" {
+		var filename string = "logfile.log"
+		// Create the log file if doesn't exist. And append to it if it already exists.
+		f, err := os.OpenFile(filename, os.O_WRONLY|os.O_APPEND|os.O_CREATE, 0644)
+		if err != nil {
+			log.Error("can not open file for logging, using stdout instead")
+		} else {
+			log.SetOutput(f)
+		}
+	}
 	log.SetLevel(loglevel)
-	log.SetOutput(f)
 }
 
 //convert string value of log level to the actual logrus.Level type
