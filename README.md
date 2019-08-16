@@ -47,7 +47,7 @@ $ ./bin/namejoked --loglevel debug ## <- or any log level, or none will default 
 build exe for container, build a container and start it
 
 ```
-GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o ./bin/docker-namejoked github.com/dfense/appchallenge/cmd/namejoked
+$ GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o ./bin/docker-namejoked github.com/dfense/appchallenge/cmd/namejoked
 $ docker build -t appchallenge .
 $ docker run -d --name namejoked -p 8080:8082 appchallenge
 $ docker stop namejoked
