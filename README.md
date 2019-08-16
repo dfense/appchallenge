@@ -51,8 +51,13 @@ build exe for container, build a container and start it
 $ GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o ./bin/docker-namejoked github.com/dfense/appchallenge/cmd/namejoked
 $ docker build -t appchallenge .
 $ docker run -d --name namejoked -p 8080:8082 appchallenge
-$ docker stop namejoked
-$ docker start namejoked
+```
+start and stop it, remove container, remove image
+```
+$ docker stop namejoked   ## stop
+$ docker start namejoked  ## start
+$ docker rm namejoked     ## after it's stopped
+$ docker rmi appchallenge ## remove image
 ```
 
 if started with container, open any browser or api call with 
@@ -61,10 +66,10 @@ if started with container, open any browser or api call with
 
 to check code compliance with "go vet" or run "go test"
 
-`
+```
 $ go test github.com/dfense/appchallenge/...
 $ go vet github.com/dfense/appchallenge/...
-`
+```
 
 ## cheat sheet
-a list of all these commands above and more are located in the build.txt file in root of project
+a list of all these commands above and more are located in the `build.txt` file in root of project
