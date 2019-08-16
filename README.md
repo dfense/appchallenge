@@ -27,7 +27,6 @@ if one is to be working in the repository, or would like the do the following:
 * go vet
 * build a docker container
 * cross compile
-
 please follwing the clone and build instructions below
 
 `
@@ -40,6 +39,7 @@ $ ./bin/namejoked --loglevel debug ## <- or any log level, or none will default 
 
 ## utils
 build a container and start it
+
 
 `
 $ docker build -t appchallenge .
